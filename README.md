@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Back-end Architecture
+Decided to leave the weight column blank (NULL) rather than put a 0. The reason being, when searching for 
 
-Things you may want to cover:
+SELECT  *
+FROM    users
+WHERE   weight = ?
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+will never match NULL. Therefore, it's best to leave the column blank.
