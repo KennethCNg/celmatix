@@ -35,10 +35,17 @@ gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
   # my gems
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'pry-rails'
   gem 'annotate'
+
+  # my test gems
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'launchy' #helps with capybara testing
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
