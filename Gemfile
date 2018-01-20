@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+gem 'jquery-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
@@ -34,18 +34,15 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # my gems
-  gem 'pry-rails'
-  gem 'annotate'
-
-  # my test gems
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem "factory_bot_rails", "~> 4.0"
+  # gives better error messages than regular rspec  
   gem 'shoulda-matchers'
   gem 'faker'
-  gem 'launchy' #helps with capybara testing
-  gem 'factory_bot_rails'
-  gem 'rspec-rails'
+  gem 'pry-rails'
+  gem 'annotate'
+  gem 'jquery-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
