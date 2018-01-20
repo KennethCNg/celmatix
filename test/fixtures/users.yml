@@ -7,7 +7,7 @@
 #  lname          :string           not null
 #  email          :string           not null
 #  age            :integer          not null
-#  height         :integer          not null
+#  height         :string           not null
 #  weight         :integer
 #  favorite_color :string           not null
 #  created_at     :datetime         not null
