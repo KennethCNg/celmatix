@@ -18,7 +18,7 @@ class User < ApplicationRecord
     VALID_EMAIL_REGEX = /.+@.+\..+/i
     VALID_NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
 
-    validates :email, presence: true, uniqueness: true 
+    validates :email, presence: true, uniqueness: true
     validates :fname, :lname, :age, :height, :favorite_color, presence: true
     validates_numericality_of :age, :weight, only_integer: true, greater_than_or_equal_to: 0
 
