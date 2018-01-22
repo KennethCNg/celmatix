@@ -34,20 +34,27 @@ class UsersController < ApplicationController
         last_name = params[:name][:lname]
 
         user = User.new(fname: first_name, lname: last_name)
-        if user.valid? == false
-            fname_errors = user.errors.messages[:fname]
-            lname_errors = user.errors.messages[:lname]
-            @errors = []
-            if !(fname_errors.empty?)
-                @errors.push(fname_errors)
-            elsif !(lname_errors.empty?)
-                @errors.push(lname_errors)
-            end
+        user.valid?
+
+        fname_errors = user.errors.messages[:fname]
+        lname_errors = user.errors.messages[:lname]
+        @errors = []
+        if !(fname_errors.empty?)
+            @errors.push(fname_errors)
+        elsif !(lname_errors.empty?)
+            @errors.push(lname_errors)
         end
     end
 
     def validate_email
         email = params[:email]
+        user = User.new(email: email)
+        @errors  = []
+        user.valid?
+
+        email_errors = user.errors.messages[:email]
+        @errors = []
+        @errors.push(email_errors) if !(email_errors.empty?)
     end
 
 end

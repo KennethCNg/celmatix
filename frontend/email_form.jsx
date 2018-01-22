@@ -1,28 +1,23 @@
 import React from 'react';
-import { Form, FormControl, Button } from 'react-bootstrap';
+import { Form, FormControl } from 'react-bootstrap';
 
 const EmailForm = props => {
 
-    const renderErrors = () => {
-        return (
-            <div className="errors">
-                {props.errors}
-            </div>
-        );
-    };
-
     return (
-        <Form onSubmit={ props.handle }>
+        <Form onSubmit={ props.handleEmailVerification }>
             <FormControl
                 required
+                type="email"
                 value={ props.email } 
                 onChange={ props.handleChange('email') } 
                 placeholder="Email"
             />
             <br />
-            { props.errors ? renderErrors() : null }
+            { props.errors ? props.renderErrors() : null }
             { props.errors ? null : <br /> }
-            <Button className="pull-right" bsStyle="primary" type='submit'>Next</Button>
+            
+            {props.nextButton()}
+            {props.prevButton()} 
         </Form>
     );
 
