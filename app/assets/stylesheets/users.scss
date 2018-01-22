@@ -4,14 +4,13 @@
 
 
 .auth-wrapper {
-    // height: 350px;
-    // width: 600px;
     overflow: auto;
     border-style: solid;
     border-color: black;
     border-radius: 5px;
     border-width: 3px;
     padding: 10% 3% 3% 3%;
+    background-color: #D1E6EE;
 }
 
 .row-1 {
@@ -30,4 +29,9 @@
 
 .pull-right {
     margin-left: 1%
+}
+
+.home-wrapper {
+    background-color: #B295E3;
+    min-height: 100vh;
 }

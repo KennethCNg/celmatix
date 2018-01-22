@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
     validates :email, presence: true, uniqueness: true
     validates :fname, :lname, :age, :height, :favorite_color, presence: true
-    validates_numericality_of :age, :weight, only_integer: true, greater_than_or_equal_to: 0
+    validates_numericality_of :weight, only_integer: true, greater_than_or_equal_to: 0
 
     # name validation from: https://stackoverflow.com/questions/2629422/rails-validating-full-name
     validates_format_of :fname, :lname, with: VALID_NAME_REGEX, message: 'name cannot contain numbers or symbols'

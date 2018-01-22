@@ -14,7 +14,7 @@ export default class AuthForm extends React.Component{
             fname : "",
             lname: "",
             email: "",
-            age: 0,
+            age: "",
             feet: 0,
             inches: 0,
             weight: 0,
@@ -26,10 +26,12 @@ export default class AuthForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleNameVerification = this.handleNameVerification.bind(this);
         this.handleEmailVerification = this.handleEmailVerification.bind(this);
+        this.handleBioVerification = this.handleBioVerification.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.createUser = this.createUser.bind(this);
         this.turnPage = this.turnPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
+        this.setAge = this.setAge.bind(this);
     }
 
     // event handlers
@@ -107,14 +109,20 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    handleBioValidation(e) {
+    handleBioVerification(e) {
         e.preventDefault();
         UserAPIUtil.verifyBio({
             bio: {
                 age: this.state.age,
-                height: this.state.feet.toString() + this.state.inches.toString(),
+                height: this.state.feet.toString() + "'" + this.state.inches.toString(),
                 weight: this.state.weight,
             }
+        }).then(() => {
+            this.turnPage();
+            this.clearErrors();
+        },
+        (err) => {
+            this.setErrorState(err.responseJSON);
         });
     }
 
@@ -136,6 +144,16 @@ export default class AuthForm extends React.Component{
                 {this.state.errors}
             </div>
         );
+    }
+
+    setAge(e) {
+        const checkedAge = e.target.value;
+        e.preventDefault();
+        this.setState((prevState, props) => {
+            return {
+                age: checkedAge,
+            };
+        });
     }
 
     render() {
@@ -179,12 +197,13 @@ export default class AuthForm extends React.Component{
                                 inches={this.state.inches}
                                 weight={this.state.weight}
                                 handleChange={this.handleChange}
-                                handleBioValidation={this.handleBioValidation}
+                                handleBioVerification={this.handleBioVerification}
                                 errors={this.state.errors}
                                 prevPage={this.prevPage}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
+                                setAge={this.setAge}
                             /> : null }
 
                         </div>

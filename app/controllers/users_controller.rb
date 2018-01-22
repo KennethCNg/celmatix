@@ -13,8 +13,9 @@ class UsersController < ApplicationController
             validate_name
         elsif params[:email]
             validate_email
+        elsif params[:bio]
+            validate_bio
         end
-        
         
         # checks errors
         if !(@errors.empty?)   
@@ -55,6 +56,23 @@ class UsersController < ApplicationController
         email_errors = user.errors.messages[:email]
         @errors = []
         @errors.push(email_errors) if !(email_errors.empty?)
+    end
+
+    def validate_bio
+        age = params[:bio][:age]
+        height = params[:bio][:height]
+        weight = params[:bio][:weight]
+        user = User.new(age: age, height: height, weight: weight)
+        @errors  = []
+        user.valid?
+
+        age_errors = user.errors.messages[:age]
+        height_errors = user.errors.messages[:height]
+        weight_errors = user.errors.messages[:weight]
+
+        @errors.push(age_errors) if !(age_errors.empty?)
+        @errors.push(height_errors) if !(height_errors.empty?)
+        @errors.push(weight_errors) if !(weight_errors.empty?)
     end
 
 end

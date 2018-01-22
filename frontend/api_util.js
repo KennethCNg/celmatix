@@ -21,3 +21,11 @@ export const verifyEmail = email => {
         data: email
     });
 };
+
+export const verifyBio = bio => {
+    return $.ajax({
+        method: 'POST',
+        url: '/users/verify',
+        data: bio
+    });
+};
