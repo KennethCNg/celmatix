@@ -4,8 +4,9 @@
 
 
 .auth-wrapper {
-    height: 350px;
-    width: 600px;
+    // height: 350px;
+    // width: 600px;
+    overflow: auto;
     border-style: solid;
     border-color: black;
     border-radius: 5px;
@@ -19,11 +20,14 @@
 
 .button-wrapper {
     display: flex;
-
 }
 
 .errors {
     color:red;
     font-weight: bold;    
     font-size: 14px;
+}
+
+.pull-right {
+    margin-left: 1%
 }
