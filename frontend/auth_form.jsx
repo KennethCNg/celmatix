@@ -37,6 +37,7 @@ export default class AuthForm extends React.Component{
         this.nextButton = this.nextButton.bind(this);
     }
 
+    // Deals with Caching Information
     componentDidMount() {
         let cachedState = {};
         if (localStorage.length > 0) {
@@ -48,9 +49,6 @@ export default class AuthForm extends React.Component{
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
-
-            localStorage.clear();
-            console.log(cachedState);
             this.setState(cachedState);
         }
     }
@@ -65,7 +63,7 @@ export default class AuthForm extends React.Component{
         }
     }
 
-    // event handlers
+    // Event Handlers
     handleChange(prop) {
         return (e) => {
             let target = e.target.type === "radio" ? e.target.value : e.currentTarget.value;
@@ -73,6 +71,13 @@ export default class AuthForm extends React.Component{
             this.cacheState(prop, target);
             this.setState({[prop]: target});
         };
+    }
+
+    // changes the height prop only if the BioVerification returns with 200 code
+    setHeight() {
+        this.setState({
+            height: this.state.feet.toString() + "'" + this.state.inches.toString(),
+        });
     }
 
     turnPage(direction) {
@@ -87,7 +92,7 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    // sends post request to backend
+    // API Requests
     createUser() {
         const state = this.state;
         UserAPIUtil.createUser({
@@ -158,6 +163,7 @@ export default class AuthForm extends React.Component{
         });
     }
 
+    // HTML Elements
     nextButton() {
         return(
             <Button className="pull-right" bsStyle="primary" type='submit'>{this.state.page === 3 ? "Finish" : "Next"}</Button>
@@ -176,12 +182,6 @@ export default class AuthForm extends React.Component{
                 {this.state.errors}
             </div>
         );
-    }
-
-    setHeight() {
-        this.setState({
-            height: this.state.feet.toString() + "'" + this.state.inches.toString(),
-        });
     }
 
     render() {
