@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:lname) }
     it { should validate_presence_of(:age) }
     it { should validate_presence_of(:height) }
-    it { should validate_presence_of(::color) } 
+    it { should validate_presence_of(:color) } 
     it { should validate_numericality_of(:age) }
     it { should validate_numericality_of(:weight) }
     
