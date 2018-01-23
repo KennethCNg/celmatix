@@ -90,20 +90,6 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    // API Requests
-    createUser() {
-        const state = this.state;
-        UserAPIUtil.createUser({
-            user: this.state
-        });
-    }
-
-    setErrorState(err) {
-        this.setState({
-            errors: [err],
-        });
-    }
-
     // handles NameForm and EmailForm and Color Form
     handleVerification(e, ...props) { 
         let args = Array.from(arguments);
@@ -125,7 +111,7 @@ export default class AuthForm extends React.Component{
             });
     }
 
-    // I could refactor handleVerification to deal with multiple keys (such as Bio, and Color), but I think it's not a necessity at the moment
+    // I could refactor handleVerification to deal with multiple keys (such as Bio, and Color), but it's not a necessity at the moment
     handleBioVerification(e) {
         e.preventDefault();
         UserAPIUtil.verifyBio({
@@ -162,6 +148,20 @@ export default class AuthForm extends React.Component{
                 {this.state.errors}
             </div>
         );
+    }
+
+    // MISC 
+    createUser() {
+        const state = this.state;
+        UserAPIUtil.createUser({
+            user: this.state
+        });
+    }
+
+    setErrorState(err) {
+        this.setState({
+            errors: [err],
+        });
     }
 
     render() {
