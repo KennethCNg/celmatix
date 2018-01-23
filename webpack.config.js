@@ -23,7 +23,7 @@ var devPlugins = []; // if using any plugins for development
 
 module.exports = {
   context: __dirname,
-  entry: './frontend/wizard.jsx',
+  entry: './frontend/root.jsx',
   output: {
     path: path.resolve(__dirname),
     filename: './app/assets/javascripts/bundle.js',

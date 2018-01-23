@@ -5,9 +5,9 @@ import AuthForm from './auth_form';
 class Root extends React.Component {
   render() {
     return(
-      <div className="home-wrapper">
-        <AuthForm />
-      </div>
+        <div className="home-wrapper">
+          <AuthForm />
+        </div>
     );
   }
 }

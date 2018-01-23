@@ -40,9 +40,38 @@ export default class AuthForm extends React.Component{
         this.setColor = this.setColor.bind(this);
     }
 
+    componentDidMount() {
+        const checkCache = localStorage.getItem('page');
+        if (checkCache) {
+            const currentState = this.state;
+            const stateKeys = Object.keys(currentState);
+
+            for (let i = 0; i < stateKeys.length; i++) {
+                let stateKey = stateKeys[i];
+                let stateValue = currentState[stateKeys[i]];
+                let cachedKey = localStorage.getItem(stateKey);
+
+                this.setState({
+                    stateKey: stateValue
+                });
+            }
+            
+        }
+    }
+
+    componentDidUpdate() {
+        this.cacheState();
+    }
+
+    cacheState(prop, value) {
+        localStorage.setItem(prop, value);
+    }
     // event handlers
     handleChange(prop) {
-        return e => this.setState({[prop]: e.currentTarget.value});
+        return (e) => {
+            this.cacheState(prop, e.currentTarget.value);
+            this.setState({[prop]: e.currentTarget.value});
+        };
     }
 
     turnPage() {
