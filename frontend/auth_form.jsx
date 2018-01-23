@@ -27,8 +27,7 @@ export default class AuthForm extends React.Component{
 
         this.renderErrors = this.renderErrors.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleNameVerification = this.handleNameVerification.bind(this);
-        this.handleEmailVerification = this.handleEmailVerification.bind(this);
+        this.handleVerification = this.handleVerification.bind(this);
         this.handleBioVerification = this.handleBioVerification.bind(this);
         this.handleColorVerification = this.handleColorVerification.bind(this);
         this.createUser = this.createUser.bind(this);
@@ -106,33 +105,28 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    handleNameVerification(e) {
-        e.preventDefault();
-        UserAPIUtil.verifyName({
-            name: {
-                fname: this.state.fname,
-                lname: this.state.lname
-            } 
-         }).then(() => {
-             this.turnPage("next");
-         },
-         (err) => {
-             this.setErrorState(err.responseJSON);
-         });
+    // handles NameForm and EmailForm
+    handleVerification(e, ...props) { 
+        let args = Array.from(arguments);
+        args = [...arguments];
+        let key = args[0];
+        let paramsHash = {};
+        paramsHash[key] = {};
+        for(let i = 1; i < args.length; i++) {
+            let prop = args[i];
+            paramsHash[key][prop] = this.state[prop];
+        }
+
+        UserAPIUtil.verifyData(paramsHash)
+            .then(() => {
+                this.turnPage("next");
+            },
+            (err) => {
+                this.setErrorState(err.responseJSON);
+            });
     }
 
-    handleEmailVerification(e) {
-        e.preventDefault();
-        UserAPIUtil.verifyEmail({
-            email: this.state.email
-        }).then(() => {
-            this.turnPage("next");
-        },
-        (err) => {
-            this.setErrorState(err.responseJSON);
-        });
-    }
-
+    // I could refactor handleVerification to deal with multiple keys (such as Bio, and Color), but I think it's not a necessity at the moment
     handleBioVerification(e) {
         e.preventDefault();
         UserAPIUtil.verifyBio({
@@ -198,10 +192,10 @@ export default class AuthForm extends React.Component{
                                 fname={this.state.fname}
                                 lname={this.state.lname}
                                 handleChange={this.handleChange}
-                                handleNameVerification={this.handleNameVerification}
                                 errors={this.state.errors}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
+                                handleVerification={this.handleVerification}
                             /> : null }
 
                         {/* Email Form */}
@@ -209,7 +203,7 @@ export default class AuthForm extends React.Component{
                             <EmailForm 
                                 email={this.state.email}
                                 handleChange={this.handleChange}
-                                handleEmailVerification={this.handleEmailVerification}
+                                handleVerification={this.handleVerification}
                                 errors={this.state.errors}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}

@@ -6,6 +6,14 @@ export const createUser = user => {
     });
 };
 
+export const verifyData = data => {
+    return $.ajax({
+        method: 'POST',
+        url: '/users/verify',
+        data
+    });
+};
+
 export const verifyName = name => {
     return $.ajax({
         method: 'POST',
