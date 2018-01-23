@@ -52,10 +52,6 @@ export default class AuthForm extends React.Component{
                 errors: [],
             };
         });
-
-        if (this.state.page === 4) {
-            this.createUser();
-        }
     }
 
     prevPage() {
@@ -131,6 +127,7 @@ export default class AuthForm extends React.Component{
             color: this.state.color,
         }).then(() => {
             this.turnPage();
+            this.createUser();
         },
         (err) => {
             this.setErrorState(err.responseJSON);

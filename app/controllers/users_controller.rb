@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-    def create
-        debugger
+    def create 
         user = User.new(user_params)
         if user.save
         # do nothing, great!
