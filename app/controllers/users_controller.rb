@@ -61,18 +61,15 @@ class UsersController < ApplicationController
     def validate_bio
         age = params[:bio][:age]
         height = params[:bio][:height]
-        weight = params[:bio][:weight]
-        user = User.new(age: age, height: height, weight: weight)
+        user = User.new(age: age, height: height)
         @errors  = []
         user.valid?
 
         age_errors = user.errors.messages[:age]
         height_errors = user.errors.messages[:height]
-        weight_errors = user.errors.messages[:weight]
 
         @errors.push(age_errors) if !(age_errors.empty?)
         @errors.push(height_errors) if !(height_errors.empty?)
-        @errors.push(weight_errors) if !(weight_errors.empty?)
     end
 
 end

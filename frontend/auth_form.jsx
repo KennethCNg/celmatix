@@ -4,6 +4,7 @@ import { Grid, Row, Col, Button } from 'react-bootstrap';
 import NameForm from './name_form';
 import EmailForm from './email_form';
 import BioForm from './bio_form';
+import ColorForm from './color_form';
 
 export default class AuthForm extends React.Component{
  
@@ -14,10 +15,10 @@ export default class AuthForm extends React.Component{
             fname : "",
             lname: "",
             email: "",
-            age: "",
+            age: "17 or younger",
             feet: 0,
             inches: 0,
-            weight: 0,
+            weight: "",
             favorite_color: "",
             errors: [],
         };
@@ -27,10 +28,13 @@ export default class AuthForm extends React.Component{
         this.handleNameVerification = this.handleNameVerification.bind(this);
         this.handleEmailVerification = this.handleEmailVerification.bind(this);
         this.handleBioVerification = this.handleBioVerification.bind(this);
+        this.handleColorVerification = this.handleColorVerification.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.createUser = this.createUser.bind(this);
         this.turnPage = this.turnPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
+        this.prevButton = this.prevButton.bind(this);
+        this.nextButton = this.nextButton.bind(this);
         this.setAge = this.setAge.bind(this);
     }
 
@@ -48,6 +52,7 @@ export default class AuthForm extends React.Component{
         this.setState((prevState, props) => {
             return {
                 page: prevState.page + 1,
+                errors: [],
             };
         });
     }
@@ -56,6 +61,7 @@ export default class AuthForm extends React.Component{
         this.setState((prevState, props) => {
             return {
                 page: prevState.page - 1,
+                errors: [],
             };
         });
     }
@@ -74,12 +80,6 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    clearErrors() {
-        this.setState({
-            errors: [],
-        });
-    }
-
     handleNameVerification(e) {
         e.preventDefault();
         UserAPIUtil.verifyName({
@@ -89,7 +89,6 @@ export default class AuthForm extends React.Component{
             } 
          }).then(() => {
              this.turnPage();
-             this.clearErrors();
          },
          (err) => {
              this.setErrorState(err.responseJSON);
@@ -102,7 +101,6 @@ export default class AuthForm extends React.Component{
             email: this.state.email
         }).then(() => {
             this.turnPage();
-            this.clearErrors();
         },
         (err) => {
             this.setErrorState(err.responseJSON);
@@ -119,7 +117,18 @@ export default class AuthForm extends React.Component{
             }
         }).then(() => {
             this.turnPage();
-            this.clearErrors();
+        },
+        (err) => {
+            this.setErrorState(err.responseJSON);
+        });
+    }
+
+    handleColorVerification(e) {
+        e.preventDefault();
+        UserAPIUtil.verifyBio({
+            color: this.state.color,
+        }).then(() => {
+            this.turnPage();
         },
         (err) => {
             this.setErrorState(err.responseJSON);
@@ -128,7 +137,7 @@ export default class AuthForm extends React.Component{
 
     nextButton() {
         return(
-            <Button className="pull-right" bsStyle="primary" type='submit'>Next</Button>
+            <Button className="pull-right" bsStyle="primary" type='submit'>{ this.state.page === 4 ? "Finish" : "Next"}</Button>
         );
     }
 
@@ -148,6 +157,7 @@ export default class AuthForm extends React.Component{
 
     setAge(e) {
         const checkedAge = e.target.value;
+        console.log(this.state.age);
         e.preventDefault();
         this.setState((prevState, props) => {
             return {
@@ -156,7 +166,19 @@ export default class AuthForm extends React.Component{
         });
     }
 
+    setColor(e) {
+        debugger;
+        const checkedColor = e.target.value;
+        e.preventDefault();
+        this.setState((prevState, props) => {
+            return {
+                color: checkedColor,
+            };
+        });
+    }
+
     render() {
+        console.log(this.state.age);
         return (
             <Grid>
                 <Row className="row-1">
@@ -206,6 +228,18 @@ export default class AuthForm extends React.Component{
                                 setAge={this.setAge}
                             /> : null }
 
+                        {/* Color Form */}
+                        { this.state.page === 3 ?
+                            <ColorForm 
+                                color={this.state.color}
+                                handleChange={this.handleChange}
+                                handleColorVerification={this.handleColorVerification}
+                                errors={this.state.errors}
+                                prevPage={this.prevPage}
+                                prevButton={this.prevButton}
+                                nextButton={this.nextButton}
+                                renderErrors={this.renderErrors}
+                            /> : null }
                         </div>
                     </ Col>  
                     <Col xs={1} s={1} md={3} lg={3} xl={3}/>
