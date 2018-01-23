@@ -66,15 +66,19 @@ export default class AuthForm extends React.Component{
 
     cacheState(prop, value) {
         if (value || value === 0) {
-            // localStorage.setItem("page",JSON.stringify(this.state.page));
             localStorage.setItem(prop, JSON.stringify(value));
         }
     }
     // event handlers
     handleChange(prop) {
         return (e) => {
-            this.cacheState(prop, e.currentTarget.value);
-            this.setState({[prop]: e.currentTarget.value});
+            if (e.target.type === "radio") {
+                this.cacheState(prop, e.target.value);
+                this.setState({[prop]: e.target.value});
+            } else {
+                this.cacheState(prop, e.currentTarget.value);
+                this.setState({[prop]: e.currentTarget.value});
+            }
         };
     }
 
@@ -274,7 +278,7 @@ export default class AuthForm extends React.Component{
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
-                                setColor={this.setColor}
+                                handleChange={this.handleChange}
                             /> : null }
 
                         {/* Finish Form */}

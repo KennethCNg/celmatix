@@ -5,12 +5,12 @@ const BioForm = props => {
         return (
             <Form onSubmit={ props.handleBioVerification }>
                 <ControlLabel>Age</ ControlLabel>
-                <FormGroup>
-                    <Radio checked={props.age === "17 or younger"} value="17 or younger" onChange={props.setAge} inline name="myAgeGroup">17 or younger</Radio>
-                    <Radio checked={props.age === "18 - 25"} onChange={props.setAge} value="18 - 25" inline name="myAgeGroup">18 - 25</Radio>
-                    <Radio checked={props.age === "26 - 35"} onChange={props.setAge} value="26 - 35" inline name="myAgeGroup">26 - 35</Radio>
-                    <Radio checked={props.age === "36 - 45"} onChange={props.setAge} value="36 - 45" inline name="myAgeGroup">36 - 45</Radio>
-                    <Radio checked={props.age === "46 or older"} onChange={props.setAge} value="46 or older" inline name="myAgeGroup">46 or older</Radio>
+                <FormGroup onChange={ props.handleChange("age") }>
+                    <Radio defaultChecked inline name="myAgeGroup" value={"17 or younger"}>17 or younger</Radio>
+                    <Radio checked={props.age === "18 - 25"} value="18 - 25" inline name="myAgeGroup">18 - 25</Radio>
+                    <Radio checked={props.age === "26 - 35"} value="26 - 35" inline name="myAgeGroup">26 - 35</Radio>
+                    <Radio checked={props.age === "36 - 45"} value="36 - 45" inline name="myAgeGroup">36 - 45</Radio>
+                    <Radio checked={props.age === "46 or older"} value="46 or older" inline name="myAgeGroup">46 or older</Radio>
                 </ FormGroup>
     
                 <ControlLabel>Height</ ControlLabel>

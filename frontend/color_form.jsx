@@ -8,8 +8,8 @@ const ColorForm = props => {
     return (
         <Form onSubmit={ props.handleColorVerification }>
             <ControlLabel>Favorite Color</ ControlLabel>
-            <FormGroup onChange={props.setColor}>
-                <Radio checked={props.color === "Red"} value="Red" name="colorGroup">Red</Radio>
+            <FormGroup onChange={props.handleChange('color')}>
+                <Radio value="Red" checked={props.color === "Red"} name="colorGroup">Red</Radio>
                 <Radio value="Orange" checked={props.color === "Orange"} name="colorGroup">Orange</Radio>
                 <Radio value="Yellow" checked={props.color === "Yellow"} name="colorGroup">Yellow</Radio>
                 <Radio value="Green" checked={props.color === "Green"} name="colorGroup">Green</Radio>
@@ -18,7 +18,6 @@ const ColorForm = props => {
                 <Radio value="" name="colorGroup" checked={!(defaultColors.has(props.color) )} >Other</Radio>
                 <FormControl readOnly={defaultColors.has(props.color)} type="text" value={props.color} onChange={props.handleChange('color')}/>
             </ FormGroup>
-            <br />
             { props.errors ? props.renderErrors() : null }
             { props.errors ? null : <br /> }
             
