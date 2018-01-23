@@ -32,29 +32,24 @@ export default class AuthForm extends React.Component{
         this.handleBioVerification = this.handleBioVerification.bind(this);
         this.handleColorVerification = this.handleColorVerification.bind(this);
         this.createUser = this.createUser.bind(this);
-        this.turnPage = this.turnPage.bind(this);
-        this.prevPage = this.prevPage.bind(this);
+        this.turnPage = this.turnPage.bind(this); 
         this.prevButton = this.prevButton.bind(this);
         this.nextButton = this.nextButton.bind(this);
-        this.setAge = this.setAge.bind(this);
-        this.setColor = this.setColor.bind(this);
     }
 
     componentDidMount() {
         let cachedState = {};
-        
         if (localStorage.length > 0) {
             const stateKeys = Object.keys(this.state);
-
             for (let i = 0; i < stateKeys.length; i++) {
                 let stateKey = stateKeys[i];
                 let cachedValue = localStorage.getItem(stateKey);
-
                 if (cachedValue) {
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
 
+            localStorage.clear();
             console.log(cachedState);
             this.setState(cachedState);
         }
@@ -69,34 +64,24 @@ export default class AuthForm extends React.Component{
             localStorage.setItem(prop, JSON.stringify(value));
         }
     }
+
     // event handlers
     handleChange(prop) {
         return (e) => {
-            if (e.target.type === "radio") {
-                this.cacheState(prop, e.target.value);
-                this.setState({[prop]: e.target.value});
-            } else {
-                this.cacheState(prop, e.currentTarget.value);
-                this.setState({[prop]: e.currentTarget.value});
-            }
+            let target = e.target.type === "radio" ? e.target.value : e.currentTarget.value;
+
+            this.cacheState(prop, target);
+            this.setState({[prop]: target});
         };
     }
 
-    turnPage() {
-        this.cacheState("page", this.state.page + 1);
+    turnPage(direction) {
+        let pageNum = ( direction === "next" ? this.state.page + 1 : this.state.page -1);
+        
+        this.cacheState("page", pageNum);
         this.setState((prevState, props) => {
             return {
-                page: prevState.page + 1,
-                errors: [],
-            };
-        });
-    }
-
-    prevPage() {
-        this.cacheState("page", this.state.page - 1);
-        this.setState((prevState, props) => {
-            return {
-                page: prevState.page - 1,
+                page: pageNum,
                 errors: [],
             };
         });
@@ -124,7 +109,7 @@ export default class AuthForm extends React.Component{
                 lname: this.state.lname
             } 
          }).then(() => {
-             this.turnPage();
+             this.turnPage("next");
          },
          (err) => {
              this.setErrorState(err.responseJSON);
@@ -136,7 +121,7 @@ export default class AuthForm extends React.Component{
         UserAPIUtil.verifyEmail({
             email: this.state.email
         }).then(() => {
-            this.turnPage();
+            this.turnPage("next");
         },
         (err) => {
             this.setErrorState(err.responseJSON);
@@ -152,7 +137,7 @@ export default class AuthForm extends React.Component{
                 weight: this.state.weight,
             }
         }).then(() => {
-            this.turnPage();
+            this.turnPage("next");
             this.setHeight();
         },
         (err) => {
@@ -165,7 +150,7 @@ export default class AuthForm extends React.Component{
         UserAPIUtil.verifyBio({
             color: this.state.color,
         }).then(() => {
-            this.turnPage();
+            this.turnPage("next");
             this.createUser();
         },
         (err) => {
@@ -181,7 +166,7 @@ export default class AuthForm extends React.Component{
 
     prevButton() {
         return (
-            <Button className="pull-right" bsStyle="primary" onClick={this.prevPage} type='button'>Prev</Button>
+            <Button className="pull-right" bsStyle="primary" onClick={() => this.turnPage("prev") } type='button'>Prev</Button>
         );
     }
 
@@ -196,24 +181,6 @@ export default class AuthForm extends React.Component{
     setHeight() {
         this.setState({
             height: this.state.feet.toString() + "'" + this.state.inches.toString(),
-        });
-    }
-
-    setAge(e) {
-        const age = e.target.value;
-        this.setState((prevState, props) => {
-            return {
-                age
-            };
-        });
-    }
-
-    setColor(e) {
-        const color = e.target.value;
-        this.setState((prevState, props) => {
-            return {
-                color
-            };
         });
     }
 
@@ -244,7 +211,6 @@ export default class AuthForm extends React.Component{
                                 handleChange={this.handleChange}
                                 handleEmailVerification={this.handleEmailVerification}
                                 errors={this.state.errors}
-                                prevPage={this.prevPage}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
@@ -260,11 +226,9 @@ export default class AuthForm extends React.Component{
                                 handleChange={this.handleChange}
                                 handleBioVerification={this.handleBioVerification}
                                 errors={this.state.errors}
-                                prevPage={this.prevPage}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
-                                setAge={this.setAge}
                             /> : null }
 
                         {/* Color Form */}
@@ -274,11 +238,9 @@ export default class AuthForm extends React.Component{
                                 handleChange={this.handleChange}
                                 handleColorVerification={this.handleColorVerification}
                                 errors={this.state.errors}
-                                prevPage={this.prevPage}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
-                                handleChange={this.handleChange}
                             /> : null }
 
                         {/* Finish Form */}
