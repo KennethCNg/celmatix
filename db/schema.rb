@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20180119233932) do
     t.string "age", null: false
     t.string "height", null: false
     t.integer "weight"
-    t.string "favorite_color", null: false
+    t.string "color", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     def create
+        debugger
         user = User.new(user_params)
         if user.save
         # do nothing, great!
@@ -15,6 +16,8 @@ class UsersController < ApplicationController
             validate_email
         elsif params[:bio]
             validate_bio
+        elsif params[:color]
+            validate_color
         end
         
         # checks errors
@@ -27,7 +30,7 @@ class UsersController < ApplicationController
 
     def user_params
         params.require(:user).permit(:fname, :lname, :email,
-        :age, :height, :weight, :favorite_color)
+        :age, :height, :weight, :color)
     end
 
     def validate_name
@@ -62,7 +65,7 @@ class UsersController < ApplicationController
         age = params[:bio][:age]
         height = params[:bio][:height]
         user = User.new(age: age, height: height)
-        @errors  = []
+        @errors = []
         user.valid?
 
         age_errors = user.errors.messages[:age]
@@ -70,6 +73,17 @@ class UsersController < ApplicationController
 
         @errors.push(age_errors) if !(age_errors.empty?)
         @errors.push(height_errors) if !(height_errors.empty?)
+    end
+
+    def validate_color
+        color = params[:color]
+        user = User.new(color: color)
+        @errors = []
+        user.valid?
+
+        color_errors = user.errors.messages[:color]
+
+        @errors.push(color_errors) if !(color_errors.empty?)
     end
 
 end

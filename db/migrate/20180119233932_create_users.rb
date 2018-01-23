@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :age, null: false
       t.string :height, null: false
       t.integer :weight
-      t.string :favorite_color, null: false
+      t.string :color, null: false
 
       t.timestamps
     end

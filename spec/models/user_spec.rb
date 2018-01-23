@@ -2,16 +2,16 @@
 #
 # Table name: users
 #
-#  id             :integer          not null, primary key
-#  fname          :string           not null
-#  lname          :string           not null
-#  email          :string           not null
-#  age            :integer          not null
-#  height         :string           not null
-#  weight         :integer
-#  favorite_color :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id         :integer          not null, primary key
+#  fname      :string           not null
+#  lname      :string           not null
+#  email      :string           not null
+#  age        :string           not null
+#  height     :string           not null
+#  weight     :integer
+#  color      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'rails_helper'
@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
       age: 39,
       height: "6'0",
       weight: 315,
-      favorite_color: "pink")
+      :color: "pink")
   end
   
   describe 'validations' do 
@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:lname) }
     it { should validate_presence_of(:age) }
     it { should validate_presence_of(:height) }
-    it { should validate_presence_of(:favorite_color) } 
+    it { should validate_presence_of(::color) } 
     it { should validate_numericality_of(:age) }
     it { should validate_numericality_of(:weight) }
     

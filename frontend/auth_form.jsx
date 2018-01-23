@@ -5,6 +5,7 @@ import NameForm from './name_form';
 import EmailForm from './email_form';
 import BioForm from './bio_form';
 import ColorForm from './color_form';
+import FinishPage from './finish_page';
 
 export default class AuthForm extends React.Component{
  
@@ -16,10 +17,11 @@ export default class AuthForm extends React.Component{
             lname: "",
             email: "",
             age: "17 or younger",
+            height: "",
             feet: 0,
             inches: 0,
             weight: "",
-            favorite_color: "",
+            color: "Red",
             errors: [],
         };
 
@@ -29,24 +31,19 @@ export default class AuthForm extends React.Component{
         this.handleEmailVerification = this.handleEmailVerification.bind(this);
         this.handleBioVerification = this.handleBioVerification.bind(this);
         this.handleColorVerification = this.handleColorVerification.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.createUser = this.createUser.bind(this);
+        this.createUser = this.createUser.bind(this);
         this.turnPage = this.turnPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
         this.prevButton = this.prevButton.bind(this);
         this.nextButton = this.nextButton.bind(this);
         this.setAge = this.setAge.bind(this);
+        this.setColor = this.setColor.bind(this);
     }
 
     // event handlers
     handleChange(prop) {
         return e => this.setState({[prop]: e.currentTarget.value});
     }
-
-    // handleSubmit(e) {
-    //     e.preventDefault();
-    //     this.createUser();
-    // }
 
     turnPage() {
         this.setState((prevState, props) => {
@@ -55,6 +52,10 @@ export default class AuthForm extends React.Component{
                 errors: [],
             };
         });
+
+        if (this.state.page === 4) {
+            this.createUser();
+        }
     }
 
     prevPage() {
@@ -67,12 +68,12 @@ export default class AuthForm extends React.Component{
     }
 
     // sends post request to backend
-    // createUser() {
-    //     const state = this.state;
-    //     UserAPIUtil.createUser({
-    //         user: this.state 
-    //     });
-    // }
+    createUser() {
+        const state = this.state;
+        UserAPIUtil.createUser({
+            user: this.state
+        });
+    }
 
     setErrorState(err) {
         this.setState({
@@ -117,6 +118,7 @@ export default class AuthForm extends React.Component{
             }
         }).then(() => {
             this.turnPage();
+            this.setHeight();
         },
         (err) => {
             this.setErrorState(err.responseJSON);
@@ -137,7 +139,7 @@ export default class AuthForm extends React.Component{
 
     nextButton() {
         return(
-            <Button className="pull-right" bsStyle="primary" type='submit'>{ this.state.page === 4 ? "Finish" : "Next"}</Button>
+            <Button className="pull-right" bsStyle="primary" type='submit'>{this.state.page === 3 ? "Finish" : "Next"}</Button>
         );
     }
 
@@ -155,30 +157,31 @@ export default class AuthForm extends React.Component{
         );
     }
 
+    setHeight() {
+        this.setState({
+            height: this.state.feet.toString() + "'" + this.state.inches.toString(),
+        });
+    }
+
     setAge(e) {
-        const checkedAge = e.target.value;
-        console.log(this.state.age);
-        e.preventDefault();
+        const age = e.target.value;
         this.setState((prevState, props) => {
             return {
-                age: checkedAge,
+                age
             };
         });
     }
 
     setColor(e) {
-        debugger;
-        const checkedColor = e.target.value;
-        e.preventDefault();
+        const color = e.target.value;
         this.setState((prevState, props) => {
             return {
-                color: checkedColor,
+                color
             };
         });
     }
 
     render() {
-        console.log(this.state.age);
         return (
             <Grid>
                 <Row className="row-1">
@@ -239,7 +242,12 @@ export default class AuthForm extends React.Component{
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
                                 renderErrors={this.renderErrors}
+                                setColor={this.setColor}
                             /> : null }
+
+                        {/* Finish Form */}
+                        { this.state.page === 4 ?
+                            <FinishPage /> : null }
                         </div>
                     </ Col>  
                     <Col xs={1} s={1} md={3} lg={3} xl={3}/>
