@@ -6,16 +6,23 @@ import { Form, FormControl, ControlLabel, FormGroup, Radio } from 'react-bootstr
 const ColorForm = props => {
     
     return (
-        <Form onSubmit={ props.handleColorVerification }>
+        <Form onSubmit={ () => props.handleVerification('color', 'color') }>
             <ControlLabel>Favorite Color</ ControlLabel>
-            <FormGroup onChange={props.handleChange('color')}>
-                <Radio value="Red" checked={props.color === "Red"} name="colorGroup">Red</Radio>
-                <Radio value="Orange" checked={props.color === "Orange"} name="colorGroup">Orange</Radio>
-                <Radio value="Yellow" checked={props.color === "Yellow"} name="colorGroup">Yellow</Radio>
-                <Radio value="Green" checked={props.color === "Green"} name="colorGroup">Green</Radio>
-                <Radio value="Blue" checked={props.color === "Blue"}name="colorGroup">Blue</Radio>
-                <Radio value="Purple" checked={props.color === "Purple"} name="colorGroup">Purple</Radio>
-                <Radio value="" name="colorGroup" checked={!(defaultColors.has(props.color) )} >Other</Radio>
+            <FormGroup>
+                <Radio value="Red" defaultChecked name="colorGroup" onChange={props.handleChange('color')}>Red</Radio>
+
+                <Radio value="Orange" checked={props.color === "Orange"} name="colorGroup" onChange={props.handleChange('color')}>Orange</Radio>
+
+                <Radio value="Yellow" checked={props.color === "Yellow"} name="colorGroup" onChange={props.handleChange('color')}>Yellow</Radio>
+
+                <Radio value="Green" checked={props.color === "Green"} name="colorGroup" onChange={props.handleChange('color')}>Green</Radio>
+
+                <Radio value="Blue" checked={props.color === "Blue"}name="colorGroup" onChange={props.handleChange('color')}>Blue</Radio>
+
+                <Radio value="Purple" checked={props.color === "Purple"} name="colorGroup" onChange={props.handleChange('color')}>Purple</Radio>
+                
+                <Radio value="" name="colorGroup" checked={!(defaultColors.has(props.color) )} onChange={props.handleChange('color')}>Other</Radio>
+                
                 <FormControl readOnly={defaultColors.has(props.color)} type="text" value={props.color} onChange={props.handleChange('color')}/>
             </ FormGroup>
             { props.errors ? props.renderErrors() : null }

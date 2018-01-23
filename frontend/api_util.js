@@ -14,22 +14,6 @@ export const verifyData = data => {
     });
 };
 
-export const verifyName = name => {
-    return $.ajax({
-        method: 'POST',
-        url: '/users/verify',
-        data: name
-    });
-};
-
-export const verifyEmail = email => {
-    return $.ajax({
-        method: 'POST',
-        url: '/users/verify',
-        data: email
-    });
-};
-
 export const verifyBio = bio => {
     return $.ajax({
         method: 'POST',

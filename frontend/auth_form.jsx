@@ -29,7 +29,6 @@ export default class AuthForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleVerification = this.handleVerification.bind(this);
         this.handleBioVerification = this.handleBioVerification.bind(this);
-        this.handleColorVerification = this.handleColorVerification.bind(this);
         this.createUser = this.createUser.bind(this);
         this.turnPage = this.turnPage.bind(this); 
         this.prevButton = this.prevButton.bind(this);
@@ -105,7 +104,7 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    // handles NameForm and EmailForm
+    // handles NameForm and EmailForm and Color Form
     handleVerification(e, ...props) { 
         let args = Array.from(arguments);
         args = [...arguments];
@@ -138,19 +137,6 @@ export default class AuthForm extends React.Component{
         }).then(() => {
             this.turnPage("next");
             this.setHeight();
-        },
-        (err) => {
-            this.setErrorState(err.responseJSON);
-        });
-    }
-
-    handleColorVerification(e) {
-        e.preventDefault();
-        UserAPIUtil.verifyBio({
-            color: this.state.color,
-        }).then(() => {
-            this.turnPage("next");
-            this.createUser();
         },
         (err) => {
             this.setErrorState(err.responseJSON);
