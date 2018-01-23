@@ -5,7 +5,6 @@ import { Form, FormControl, ControlLabel, FormGroup, Radio } from 'react-bootstr
 
 const ColorForm = props => {
     
-
     return (
         <Form onSubmit={ props.handleColorVerification }>
             <ControlLabel>Favorite Color</ ControlLabel>

@@ -41,21 +41,22 @@ export default class AuthForm extends React.Component{
     }
 
     componentDidMount() {
-        const checkCache = localStorage.getItem('page');
-        if (checkCache) {
-            const currentState = this.state;
-            const stateKeys = Object.keys(currentState);
+        let cachedState = {};
+        
+        if (localStorage.length > 0) {
+            const stateKeys = Object.keys(this.state);
 
             for (let i = 0; i < stateKeys.length; i++) {
                 let stateKey = stateKeys[i];
-                let stateValue = currentState[stateKeys[i]];
-                let cachedKey = localStorage.getItem(stateKey);
+                let cachedValue = localStorage.getItem(stateKey);
 
-                this.setState({
-                    stateKey: stateValue
-                });
+                if (cachedValue) {
+                    cachedState[stateKey] = JSON.parse(cachedValue);
+                }
             }
-            
+
+            console.log(cachedState);
+            this.setState(cachedState);
         }
     }
 
@@ -64,7 +65,10 @@ export default class AuthForm extends React.Component{
     }
 
     cacheState(prop, value) {
-        localStorage.setItem(prop, value);
+        if (value || value === 0) {
+            // localStorage.setItem("page",JSON.stringify(this.state.page));
+            localStorage.setItem(prop, JSON.stringify(value));
+        }
     }
     // event handlers
     handleChange(prop) {
@@ -75,6 +79,7 @@ export default class AuthForm extends React.Component{
     }
 
     turnPage() {
+        this.cacheState("page", this.state.page + 1);
         this.setState((prevState, props) => {
             return {
                 page: prevState.page + 1,
@@ -84,6 +89,7 @@ export default class AuthForm extends React.Component{
     }
 
     prevPage() {
+        this.cacheState("page", this.state.page - 1);
         this.setState((prevState, props) => {
             return {
                 page: prevState.page - 1,

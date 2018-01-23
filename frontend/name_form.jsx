@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, FormControl, Button, ControlLabel } from 'react-bootstrap';
 
 const NameForm = props => {
-
     return (
         <Form onSubmit={ props.handleNameVerification }>
             <ControlLabel>First Name</ ControlLabel>
