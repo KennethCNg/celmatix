@@ -73,6 +73,14 @@ Validations are sent to the backend and are tied the "Next" button. The promise 
 
 ### Dev-Related Issues
 
+#### Things I would've done different
+
+1. Use ONLY RESTful routes. I recreated a custom route specific for validations, but after doing some additiional reading - I should've avoided it. I might've been able to use just my create method and do the validations there.
+
+2. Refactor my validations heavily. I would've set up my front-end to send param names that matched exactly the columns in my database (so not use bio). I would then be able to interpolate into `user.errors.messages[interpolate_here]` and grab the necessary errors.
+
+3. Definitely spend less time on my front-end because it took away time from refactoring my controller. I was overzealous - you live, you learn.
+
 #### Things I learned
 
 1. Caching! It's pretty cool, and fairly simple and straightforward with localStorage.
