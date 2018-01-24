@@ -47,7 +47,6 @@ export default class AuthForm extends React.Component{
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
-            localStorage.clear();
             this.setState(cachedState);
         }
     }
