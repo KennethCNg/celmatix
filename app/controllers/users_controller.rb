@@ -20,7 +20,7 @@ class UsersController < ApplicationController
         end
         
         # checks errors
-        if !(@errors.empty?)   
+        if !(@errors.empty?) 
             render json: @errors, status: 422
         end
     end
@@ -33,15 +33,16 @@ class UsersController < ApplicationController
     end
 
     def validate_name
-        first_name = params[:name][:fname]
-        last_name = params[:name][:lname]
+        fname = params[:name][:fname]
+        lname = params[:name][:lname]
 
-        user = User.new(fname: first_name, lname: last_name)
+        user = User.new(fname: fname, lname: lname)
         user.valid?
 
         fname_errors = user.errors.messages[:fname]
         lname_errors = user.errors.messages[:lname]
         @errors = []
+        
         if !(fname_errors.empty?)
             @errors.push(fname_errors)
         elsif !(lname_errors.empty?)
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
     end
 
     def validate_email
-        email = params[:email]
+        email = params[:email][:email]
         user = User.new(email: email)
         @errors  = []
         user.valid?
@@ -75,7 +76,7 @@ class UsersController < ApplicationController
     end
 
     def validate_color
-        color = params[:color]
+        color = params[:color][:color]
         user = User.new(color: color)
         @errors = []
         user.valid?
@@ -83,6 +84,10 @@ class UsersController < ApplicationController
         color_errors = user.errors.messages[:color]
 
         @errors.push(color_errors) if !(color_errors.empty?)
+    end
+
+    def errors?()
+        
     end
 
 end

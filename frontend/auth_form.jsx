@@ -90,7 +90,7 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    // handles NameForm and EmailForm and Color Form
+    // handles NameForm and EmailForm and ColorForm
     handleVerification(e, ...props) {
         e.preventDefault();
         let args = Array.from(arguments);

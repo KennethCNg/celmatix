@@ -16,6 +16,12 @@
 
 FactoryBot.define do
   factory :user do
-    
+    fname { Faker::Name.first_name }
+    lname { Faker::Name.last_name }
+    email { Faker::Internet.email }
+    age { Faker::Number.between(1, 1000) }
+    height { Faker::Number.digit.to_s + "'" + Faker::Number.digit.to_s }
+    weight { Faker::Number.between(1, 1000) }
+    color { Faker::Color.color_name }
   end
 end

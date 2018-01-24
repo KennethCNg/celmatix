@@ -42,6 +42,7 @@ const BioForm = props => {
                     />
                 </ FormGroup>
                 <br />
+                
                 <ControlLabel>Weight (optional)</ ControlLabel>
                 <FormControl
                     type="number"

@@ -21,8 +21,10 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validates :fname, :lname, :age, :height, :color, presence: true
     validates_numericality_of :weight, only_integer: true, greater_than_or_equal_to: 0, :allow_blank => true
-
+    validates_format_of :email, with: VALID_EMAIL_REGEX, message: 'Email must have valid format such as (ex. faker@gmail.com)'
     # name validation from: https://stackoverflow.com/questions/2629422/rails-validating-full-name
-    validates_format_of :fname, :lname, with: VALID_NAME_REGEX, message: 'name cannot contain numbers or symbols'
-    validates_format_of :email, with: VALID_EMAIL_REGEX, message: 'must have valid format such as (ex. faker@gmail.com)'
+    validates_format_of :fname, :lname, with: VALID_NAME_REGEX, message: 'Name cannot contain numbers or symbols'
+    validates_format_of :color, with: VALID_NAME_REGEX, message: 'Color cannot contain numbers or symbols'
+
+    
 end
