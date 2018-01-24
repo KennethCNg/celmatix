@@ -35,10 +35,10 @@ export default class AuthForm extends React.Component{
         this.nextButton = this.nextButton.bind(this);
     }
 
-    // Deals with Caching Information
+    // Sets cache as state if available
     componentDidMount() {
         let cachedState = {};
-        if (localStorage.length > 0) {
+        if (localStorage.length > 0) { 
             const stateKeys = Object.keys(this.state);
             for (let i = 0; i < stateKeys.length; i++) {
                 let stateKey = stateKeys[i];
@@ -49,10 +49,6 @@ export default class AuthForm extends React.Component{
             }
             this.setState(cachedState);
         }
-    }
-
-    componentDidUpdate() {
-        this.cacheState();
     }
 
     cacheState(prop, value) {
@@ -79,7 +75,7 @@ export default class AuthForm extends React.Component{
     }
 
     turnPage(direction) {
-        let pageNum = ( direction === "next" ? this.state.page + 1 : this.state.page -1);
+        let pageNum = ( direction === "next" ? this.state.page + 1 : this.state.page - 1);
         
         this.cacheState("page", pageNum);
         this.setState((prevState, props) => {
@@ -92,16 +88,13 @@ export default class AuthForm extends React.Component{
 
     // handles NameForm and EmailForm and ColorForm
     handleVerification(e, ...props) {
+
+        // receives the key for the params as an array
         e.preventDefault();
         let args = Array.from(arguments);
-        args.shift();
-        let key = args[0];
-        let paramsHash = {};
-        paramsHash[key] = {};
-        for(let i = 1; i < args.length; i++) {
-            let prop = args[i];
-            paramsHash[key][prop] = this.state[prop];
-        }
+        args.shift(); // removes the event (the first argument)
+
+        let paramsHash = this.makeParamsHash(args);
 
         UserAPIUtil.verifyData(paramsHash)
             .then(() => {
@@ -110,6 +103,19 @@ export default class AuthForm extends React.Component{
             (err) => {
                 this.setErrorState(err.responseJSON);
             });
+    }
+
+    makeParamsHash(paramKeys) {
+        let key = paramKeys[0];
+        let paramsHash = {};
+        paramsHash[key] = {};
+
+        // for-loop creates the format for the params to send for verification in the backend
+        for(let i = 1; i < paramKeys.length; i++) {
+            let prop = paramKeys[i];
+            paramsHash[key][prop] = this.state[prop];
+        }
+        return paramsHash;
     }
 
     // I could refactor handleVerification to deal with multiple keys (such as Bio, and Color), but it's not a necessity at the moment
