@@ -43,6 +43,8 @@ export default class AuthForm extends React.Component{
             for (let i = 0; i < stateKeys.length; i++) {
                 let stateKey = stateKeys[i];
                 let cachedValue = localStorage.getItem(stateKey);
+
+                //  if cache has a property of state (such as page, fname, etc, store it in 'cachedState')
                 if (cachedValue) {
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
@@ -52,14 +54,17 @@ export default class AuthForm extends React.Component{
     }
 
     cacheState(prop, value) {
-        if (value || value === 0) {
+        // using 0's to account for feet, inches, or the page number
+        if (value || value === 0) { 
             localStorage.setItem(prop, JSON.stringify(value));
         }
     }
 
     // Event Handlers
+    // page is the only prop that doesn't use the handleChange function
     handleChange(prop) {
         return (e) => {
+            // apparently radio buttons have different methods to grab the value
             let target = e.target.type === "radio" ? e.target.value : e.currentTarget.value;
 
             this.cacheState(prop, target);
@@ -74,10 +79,12 @@ export default class AuthForm extends React.Component{
         });
     }
 
+    
     turnPage(direction) {
         let pageNum = ( direction === "next" ? this.state.page + 1 : this.state.page - 1);
         
-        this.cacheState("page", pageNum);
+        this.cachePage(pageNum);
+
         this.setState((prevState, props) => {
             return {
                 page: pageNum,
@@ -86,10 +93,14 @@ export default class AuthForm extends React.Component{
         });
     }
 
-    // handles NameForm and EmailForm and ColorForm
+    cachePage(pageNum) {
+        this.cacheState("page", pageNum);
+    }
+
+    // handles NameForm and EmailForm and ColorForm verfications
     handleVerification(e, ...props) {
 
-        // receives the key for the params as an array
+        // receives the key for the params as an array from the forms
         e.preventDefault();
         let args = Array.from(arguments);
         args.shift(); // removes the event (the first argument)
@@ -105,12 +116,13 @@ export default class AuthForm extends React.Component{
             });
     }
 
+    // readies the format to pass the back-end
     makeParamsHash(paramKeys) {
         let key = paramKeys[0];
         let paramsHash = {};
-        paramsHash[key] = {};
+        paramsHash[key] = {}; //first element in paramKeys is the key. everything else are the values to that key.
 
-        // for-loop creates the format for the params to send for verification in the backend
+        // for-loop creates the format for the params
         for(let i = 1; i < paramKeys.length; i++) {
             let prop = paramKeys[i];
             paramsHash[key][prop] = this.state[prop];
@@ -118,7 +130,7 @@ export default class AuthForm extends React.Component{
         return paramsHash;
     }
 
-    // I could refactor handleVerification to deal with multiple keys (such as Bio, and Color), but it's not a necessity at the moment
+    // because the height is only set AFTER it passes the validations, Bio has its own handler to send the height to the backend 
     handleBioVerification(e) {
         e.preventDefault();
         UserAPIUtil.verifyBio({
@@ -129,7 +141,7 @@ export default class AuthForm extends React.Component{
             }
         }).then(() => {
             this.turnPage("next");
-            this.setHeight();
+            this.setHeight(); // see comments above this function
         },
         (err) => {
             this.setErrorState(err.responseJSON);
@@ -203,7 +215,7 @@ export default class AuthForm extends React.Component{
                                 renderErrors={this.renderErrors}
                             /> : null }
                         
-                        {/* Bio Form */}
+                        {/* Bio Form (age, height, weight) */}
                         { this.state.page === 2 ?
                             <BioForm 
                                 age={this.state.age}

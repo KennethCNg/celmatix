@@ -3,6 +3,7 @@ import { Form, FormControl, Button, ControlLabel } from 'react-bootstrap';
 
 const NameForm = props => {
     return (
+        // the arguments on submission will be sent to the backend in this format {"name" : {"fname": this.state.fname, "lname": "this.state.lname"} }
         <Form onSubmit={ (e) => props.handleVerification(e, "name", "fname", "lname") }>
             <ControlLabel>First Name</ ControlLabel>
             <FormControl

@@ -3,6 +3,7 @@ import { Form, FormControl, ControlLabel, FormGroup, Radio } from 'react-bootstr
 
 const BioForm = props => {
         return (
+            // the arguments on submission will be sent to the backend in this format {"bio" : {"fname": this.state.fname, "lname": "this.state.lname"} }
             <Form onSubmit={ props.handleBioVerification }>
                 <ControlLabel>Age</ ControlLabel>
                 <FormGroup>
