@@ -30,7 +30,7 @@ The schema consists of just a Users table.
 
 <table>
   <tr>
-    <td></td>
+    <td>id</td>
     <td>fname</td>
     <td>lname</td>
     <td>email</td>
