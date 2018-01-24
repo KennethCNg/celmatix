@@ -47,6 +47,7 @@ export default class AuthForm extends React.Component{
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
+            localStorage.clear();
             this.setState(cachedState);
         }
     }
@@ -92,8 +93,9 @@ export default class AuthForm extends React.Component{
 
     // handles NameForm and EmailForm and Color Form
     handleVerification(e, ...props) {
+        e.preventDefault();
         let args = Array.from(arguments);
-        args = [...arguments];
+        args.shift();
         let key = args[0];
         let paramsHash = {};
         paramsHash[key] = {};

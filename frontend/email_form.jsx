@@ -4,7 +4,7 @@ import { Form, FormControl, ControlLabel } from 'react-bootstrap';
 const EmailForm = props => {
 
     return (
-        <Form onSubmit={ () => props.handleVerification("email", "email") }>
+        <Form onSubmit={ (e) => props.handleVerification(e, "email", "email") }>
         <ControlLabel>Email</ ControlLabel>
             <FormControl
                 required
