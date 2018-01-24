@@ -91,7 +91,7 @@ export default class AuthForm extends React.Component{
     }
 
     // handles NameForm and EmailForm and Color Form
-    handleVerification(e, ...props) { 
+    handleVerification(e, ...props) {
         let args = Array.from(arguments);
         args = [...arguments];
         let key = args[0];
@@ -216,7 +216,7 @@ export default class AuthForm extends React.Component{
                             <ColorForm 
                                 color={this.state.color}
                                 handleChange={this.handleChange}
-                                handleColorVerification={this.handleColorVerification}
+                                handleVerification={this.handleVerification}
                                 errors={this.state.errors}
                                 prevButton={this.prevButton}
                                 nextButton={this.nextButton}
