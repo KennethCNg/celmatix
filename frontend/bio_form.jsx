@@ -25,7 +25,7 @@ const BioForm = props => {
                         inline="true"
                         type="number"
                         value={ props.feet } 
-                        max="8"
+                        max="10"
                         min="1"
                         onChange={ props.handleChange('feet') } 
                     />

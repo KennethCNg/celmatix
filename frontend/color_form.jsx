@@ -14,7 +14,6 @@ const ColorForm = props => {
                 <Radio value="Orange" checked={props.color === "Orange"} name="color" onChange={props.handleChange('color')}>Orange</Radio>
 
                 <Radio value="Yellow" checked={props.color === "Yellow"} name="color" onChange={props.handleChange('color')}>Yellow</Radio>
-                <Radio value="Yellow" checked={props.color === "Yellow"} name="color" onChange={props.handleChange('color')}>Yellow</Radio>
 
                 <Radio value="Green" checked={props.color === "Green"} name="color" onChange={props.handleChange('color')}>Green</Radio>
 
