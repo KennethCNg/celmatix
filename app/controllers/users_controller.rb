@@ -8,6 +8,7 @@ class UsersController < ApplicationController
         end
     end
 
+    # custom route
     def verify
         if params[:name]
             validate_name
@@ -29,9 +30,9 @@ class UsersController < ApplicationController
 
     def user_params
         params.require(:user).permit(:fname, :lname, :email,
-        :age, :height, :weight, :color)
+        :age, :height, :weight, :color, :bio)
     end
-
+    
     def validate_name
         fname = params[:name][:fname]
         lname = params[:name][:lname]
@@ -84,10 +85,6 @@ class UsersController < ApplicationController
         color_errors = user.errors.messages[:color]
 
         @errors.push(color_errors) if !(color_errors.empty?)
-    end
-
-    def errors?()
-        
     end
 
 end
