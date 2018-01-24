@@ -20,6 +20,7 @@ class User < ApplicationRecord
 
     validates :email, presence: true, uniqueness: true
     validates :fname, :lname, :age, :height, :color, presence: true
+    validates :age, inclusion: { in: ["17 or younger", "18 - 25", "26 - 35", "36 - 45", "46 or older"], message: "%{value} is not a valid age" }
     validates_numericality_of :weight, only_integer: true, greater_than_or_equal_to: 0, :allow_blank => true
     validates_format_of :email, with: VALID_EMAIL_REGEX, message: 'Email must have valid format such as (ex. faker@gmail.com)'
     # name validation from: https://stackoverflow.com/questions/2629422/rails-validating-full-name
