@@ -54,8 +54,8 @@ The schema consists of just a Users table.
     <td>"Charles Montgomery"</td>
     <td>"Burns"</td>
     <td>"MrBurns@gmail.com"</td>
-    <td>"5'11"</td>
     <td>"46 or older"</td>
+    <td>"5'11"</td>
     <td>NULL</td>
     <td>"Green"</td>
   </tr>
