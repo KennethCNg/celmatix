@@ -49,6 +49,7 @@ export default class AuthForm extends React.Component{
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
+            localStorage.clear();
             this.setState(cachedState);
         }
     }
@@ -110,6 +111,9 @@ export default class AuthForm extends React.Component{
         UserAPIUtil.verifyData(paramsHash)
             .then(() => {
                 this.turnPage("next");
+                if (this.state.page === 4) {
+                    this.createUser();
+                }
             },
             (err) => {
                 this.setErrorState(err.responseJSON);
