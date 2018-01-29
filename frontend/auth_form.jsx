@@ -35,10 +35,16 @@ export default class AuthForm extends React.Component{
         this.nextButton = this.nextButton.bind(this);
     }
 
-    // Sets cache as state if available
+    
     componentDidMount() {
-        let cachedState = {};
+        this.checkCache();
+    }
+
+    // Sets cache as state if available
+    checkCache() {
         if (localStorage.length > 0) { 
+            let cachedState = {};
+
             const stateKeys = Object.keys(this.state);
             for (let i = 0; i < stateKeys.length; i++) {
                 let stateKey = stateKeys[i];
@@ -49,8 +55,7 @@ export default class AuthForm extends React.Component{
                     cachedState[stateKey] = JSON.parse(cachedValue);
                 }
             }
-            localStorage.clear();
-            this.setState(cachedState);
+            this.setState(cachedState); 
         }
     }
 
@@ -120,7 +125,7 @@ export default class AuthForm extends React.Component{
             });
     }
 
-    // readies the format to pass the back-end
+    // readies the format to pass to the back-end
     makeParamsHash(paramKeys) {
         let key = paramKeys[0];
         let paramsHash = {};
